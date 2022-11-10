@@ -1,0 +1,44 @@
+#criar pv e pvc
+
+#criando deployment do banco de dados
+#com a imagem que foi pro build
+#args ignorar caso persistent volume já possua dados
+# imagePolicy sempre que executar o pod baixar a imagem
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: edu704/database-projeto-kubernetes:1.0
+        args:
+          - "--ignore-db-dir=lost+found"
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts: 
+        - name: mysql-dados
+          mountPath: /var/lib/mysql/
+      volumes:
+      - name: mysql-dados
+        persistentVolumeClaim:
+          claimName: local
+

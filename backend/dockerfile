@@ -1,0 +1,32 @@
+#imagem de um container usando PHP como base
+FROM php:7.4-apache
+
+#especificando a pasta padrão
+WORKDIR /var/www/html/
+
+#Quais arquivos serão copiados para esse container (nesse caso serão dois)
+COPY index.php /var/www/html
+COPY conexao.php /var/www/html/
+
+#instalando recursos...
+#update atualiza a lista de pacotes e programas que podem ser instalados na máquina &&
+#install atualiza o sistema, baixa e instala atualizações de pacotes e dos programas da máquina.
+#libfreetype é um pacote de arquivos para desenvolver programas usando a biblioteca FreeType.
+#libjpeg é um codec de imagem JPEG para acelerar a compactação e descompactação JPEG.
+#libpng implementa interface para leitura e gravação de arquivos no formato PNG.
+#Biblioteca GD para o PHP com suporte ao freetype e jpeg
+#PDO_MYSQL driver que implementa a interface PHP Data Objects (PDO) para do acesso do PHP ao MySQL 3
+#mysqli fornece acesso e conexão com o banco mysql
+RUN apt-get update && apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install mysqli 
+
+#espondo a porta 80
+EXPOSE 80
+
+

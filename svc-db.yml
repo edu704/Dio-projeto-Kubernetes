@@ -1,0 +1,13 @@
+# serviço de conexão do backend com banco de dados
+# especificando name mysql-connect aqui e no arquivo conexao.php
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-connect
+spec:
+  selector:
+    app: mysql
+  ports:
+  - port: 3306
+  clusterIP: None

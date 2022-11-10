@@ -1,0 +1,16 @@
+#usando imagem como base
+FROM mysql:5.7
+
+#diretorio de trabalho
+WORKDIR /var/lib/mysql
+
+#senha do banco de dados
+ENV MYSQL_ROOT_PASSWORD=Senha123
+
+#nome do banco
+ENV MYSQL_DATABASE=meubanco
+
+#subir uma tabela junto com o banco (criar tabela)
+ADD sql.sql /docker-entrypoint-initdb.d
+
+EXPOSE 3306

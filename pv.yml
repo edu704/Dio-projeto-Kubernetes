@@ -1,0 +1,16 @@
+#Criando um Pesistent volume
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local
+  labels:
+    name: local
+spec:
+  capacity:
+    storage: 10Mi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: manual
+  hostPath:
+    path: /meubanco/
