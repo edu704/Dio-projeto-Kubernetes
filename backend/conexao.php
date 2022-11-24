@@ -2,7 +2,7 @@
 // variaveis de ambiente 
 
 <?php
-$servername = "";
+$servername = "mysql-connect";
 $username = "root";
 $password = "Senha123";
 $database = "meubanco";
